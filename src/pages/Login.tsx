@@ -12,7 +12,7 @@ export function Login() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Basic mock login validation
-    if (email === 'admin@successintel.com' && password === 'admin123') {
+    if ((email === 'admin@studentintel.com' || email === 'admin@successintel.com') && password === 'admin123') {
       login({ name: 'System Admin', email, role: 'admin' });
       navigate('/admin/dashboard');
     } else if (email.includes('student')) {
@@ -32,9 +32,9 @@ export function Login() {
   const demoLogin = (role: 'student' | 'teacher' | 'parent' | 'admin') => {
     let user;
     if (role === 'admin') {
-      user = { name: 'System Admin', email: 'admin@successintel.com', role };
+      user = { name: 'System Admin', email: 'admin@studentintel.com', role };
     } else if (role === 'teacher') {
-      user = { name: 'Dr. Alan Turing', email: 'alan.turing@successintel.edu', role };
+      user = { name: 'Dr. Alan Turing', email: 'alan.turing@studentintel.edu', role };
     } else {
       user = { name: `Demo ${role.charAt(0).toUpperCase() + role.slice(1)}`, email: `${role}@demo.com`, role };
     }
@@ -55,7 +55,7 @@ export function Login() {
               <BrainCircuit className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-              Success Intel
+              Student Intel
             </span>
           </Link>
         </div>
@@ -78,7 +78,7 @@ export function Login() {
 
         <div className="relative z-10 mt-auto pt-20">
           <div className="flex items-center gap-4 text-sm text-slate-500">
-            <span>© 2026 Success Intel AI</span>
+            <span>© 2026 Student Intel AI</span>
             <span>•</span>
             <a href="#" className="hover:text-slate-300 transition-colors">Privacy Policy</a>
             <span>•</span>
@@ -96,7 +96,7 @@ export function Login() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
               <BrainCircuit className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-white">Success Intel</span>
+            <span className="text-2xl font-bold text-white">Student Intel</span>
           </div>
 
           <div className="mb-10 text-center lg:text-left">

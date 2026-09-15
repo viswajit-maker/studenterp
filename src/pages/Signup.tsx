@@ -32,7 +32,7 @@ export function Signup() {
         <div className="w-10 h-10 rounded-lg bg-indigo-500 flex items-center justify-center">
           <LineChart className="w-6 h-6 text-white" />
         </div>
-        <span className="text-2xl font-semibold text-white tracking-tight">Success Intel</span>
+        <span className="text-2xl font-semibold text-white tracking-tight">Student Intel</span>
       </div>
 
       <Card className="w-full max-w-md">
