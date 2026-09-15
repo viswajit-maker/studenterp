@@ -6,7 +6,7 @@ import path from 'path';
 import fs from 'fs';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY || '');
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 const app = express();
 const PORT = 3000;
@@ -245,16 +245,16 @@ app.get('/api/parent/meetings', (req, res) => {
 
 // --- Admin Endpoints ---
 let teachersData = [
-  { id: 1, name: 'Dr. Alan Turing', teacher_id: 'T-001', department: 'Computer Science', email: 'alan.turing@successintel.edu', phone: '555-0101', subjects: 'Data Structures, Algorithms', students: 120, rating: 4.8 },
-  { id: 2, name: 'Prof. Marie Curie', teacher_id: 'T-002', department: 'Physics', email: 'marie.curie@successintel.edu', phone: '555-0102', subjects: 'Quantum Mechanics, Thermodynamics', students: 85, rating: 4.9 },
-  { id: 3, name: 'Dr. Richard Feynman', teacher_id: 'T-003', department: 'Physics', email: 'richard.feynman@successintel.edu', phone: '555-0103', subjects: 'Electromagnetism', students: 150, rating: 4.7 },
-  { id: 4, name: 'Prof. Ada Lovelace', teacher_id: 'T-004', department: 'Mathematics', email: 'ada.lovelace@successintel.edu', phone: '555-0104', subjects: 'Calculus, Linear Algebra', students: 200, rating: 4.6 },
-  { id: 5, name: 'Dr. Jane Goodall', teacher_id: 'T-005', department: 'Biology', email: 'jane.goodall@successintel.edu', phone: '555-0105', subjects: 'Ecology, Zoology', students: 95, rating: 4.9 },
+  { id: 1, name: 'Dr. Alan Turing', teacher_id: 'T-001', department: 'Computer Science', email: 'alan.turing@studentintel.edu', phone: '555-0101', subjects: 'Data Structures, Algorithms', students: 120, rating: 4.8 },
+  { id: 2, name: 'Prof. Marie Curie', teacher_id: 'T-002', department: 'Physics', email: 'marie.curie@studentintel.edu', phone: '555-0102', subjects: 'Quantum Mechanics, Thermodynamics', students: 85, rating: 4.9 },
+  { id: 3, name: 'Dr. Richard Feynman', teacher_id: 'T-003', department: 'Physics', email: 'richard.feynman@studentintel.edu', phone: '555-0103', subjects: 'Electromagnetism', students: 150, rating: 4.7 },
+  { id: 4, name: 'Prof. Ada Lovelace', teacher_id: 'T-004', department: 'Mathematics', email: 'ada.lovelace@studentintel.edu', phone: '555-0104', subjects: 'Calculus, Linear Algebra', students: 200, rating: 4.6 },
+  { id: 5, name: 'Dr. Jane Goodall', teacher_id: 'T-005', department: 'Biology', email: 'jane.goodall@studentintel.edu', phone: '555-0105', subjects: 'Ecology, Zoology', students: 95, rating: 4.9 },
 ];
 
 let alertLogs = [
-  { id: 1, studentName: 'David Johnson', studentId: 'STU123', department: 'Computer Science', ssisScore: 55.8, teacherEmail: 'alan.turing@successintel.edu', teacherName: 'Dr. Alan Turing', riskLevel: 'High Risk', status: 'Email Sent', timestamp: '10:42 AM' },
-  { id: 2, studentName: 'Patricia Davis', studentId: 'STU124', department: 'Physics', ssisScore: 44.1, teacherEmail: 'marie.curie@successintel.edu', teacherName: 'Prof. Marie Curie', riskLevel: 'High Risk', status: 'Email Sent', timestamp: '10:43 AM' }
+  { id: 1, studentName: 'David Johnson', studentId: 'STU123', department: 'Computer Science', ssisScore: 55.8, teacherEmail: 'alan.turing@studentintel.edu', teacherName: 'Dr. Alan Turing', riskLevel: 'High Risk', status: 'Email Sent', timestamp: '10:42 AM' },
+  { id: 2, studentName: 'Patricia Davis', studentId: 'STU124', department: 'Physics', ssisScore: 44.1, teacherEmail: 'marie.curie@studentintel.edu', teacherName: 'Prof. Marie Curie', riskLevel: 'High Risk', status: 'Email Sent', timestamp: '10:43 AM' }
 ];
 
 app.get('/api/teacher/alerts', (req, res) => {

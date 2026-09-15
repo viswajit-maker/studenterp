@@ -96,7 +96,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center">
               <LineChart className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-semibold text-white tracking-tight">Success Intel</span>
+            <span className="text-xl font-semibold text-white tracking-tight">Student Intel</span>
           </div>
           
           <nav className="hidden md:flex items-center gap-2 ml-4">
