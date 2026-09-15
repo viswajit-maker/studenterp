@@ -1,13 +1,966 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Cosmic — AI Experience</title>
+
+  <meta
+    name="description"
+    content="A modern futuristic AI-powered platform."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: #050509;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Background */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(120, 80, 255, 0.15),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 80% 10%,
+          rgba(0, 200, 255, 0.10),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 50% 80%,
+          rgba(255, 0, 150, 0.08),
+          transparent 30%
+        );
+      z-index: -2;
+    }
+
+    /* Grid */
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 85%
+      );
+      z-index: -1;
+    }
+
+    /* NAVBAR */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(5, 5, 9, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      height: 72px;
+      padding: 0 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+
+      display: grid;
+      place-items: center;
+
+      background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+      );
+
+      box-shadow:
+        0 0 25px rgba(124, 58, 237, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-button {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+
+      background: rgba(255,255,255,0.06);
+      color: white;
+
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-button:hover {
+      background: white;
+      color: black;
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 150px 24px 80px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 850px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 8px 14px;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+
+      color: #c4b5fd;
+      font-size: 13px;
+
+      margin-bottom: 25px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 92px);
+      line-height: 0.95;
+      letter-spacing: -5px;
+
+      background: linear-gradient(
+        135deg,
+        #ffffff 20%,
+        #a78bfa 50%,
+        #22d3ee
+      );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      margin-bottom: 28px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+
+      color: #a1a1aa;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      margin-top: 35px;
+
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .primary-button,
+    .secondary-button {
+      padding: 14px 24px;
+      border-radius: 12px;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      text-decoration: none;
+      cursor: pointer;
+
+      transition: 0.3s;
+    }
+
+    .primary-button {
+      color: white;
+
+      background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #2563eb
+      );
+
+      box-shadow:
+        0 10px 35px rgba(124, 58, 237, 0.3);
+    }
+
+    .primary-button:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 15px 45px rgba(124, 58, 237, 0.45);
+    }
+
+    .secondary-button {
+      color: white;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .secondary-button:hover {
+      background: rgba(255,255,255,0.10);
+      transform: translateY(-3px);
+    }
+
+    /* ORBIT */
+
+    .orb {
+      position: absolute;
+
+      width: 420px;
+      height: 420px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          rgba(255,255,255,0.4),
+          transparent 5%
+        ),
+        radial-gradient(
+          circle,
+          rgba(124,58,237,0.18),
+          transparent 65%
+        );
+
+      filter: blur(2px);
+      z-index: -1;
+
+      animation: float 7s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-25px) scale(1.05);
+      }
+    }
+
+    /* FEATURES */
+
+    .section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 100px 24px;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-heading span {
+      color: #8b5cf6;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .section-heading h2 {
+      margin-top: 12px;
+
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: -2px;
+    }
+
+    .section-heading p {
+      color: #71717a;
+      margin-top: 15px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 30px;
+
+      border-radius: 20px;
+
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+
+      transition: 0.35s;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(124,58,237,0.15),
+          transparent 40%
+        );
+
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(139,92,246,0.4);
+      background: rgba(255,255,255,0.055);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+
+      border-radius: 14px;
+
+      display: grid;
+      place-items: center;
+
+      background: rgba(124,58,237,0.15);
+
+      font-size: 22px;
+
+      margin-bottom: 22px;
+    }
+
+    .card h3 {
+      font-size: 19px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #71717a;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* SHOWCASE */
+
+    .showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .showcase-text h2 {
+      font-size: 45px;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    .showcase-text p {
+      color: #a1a1aa;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .showcase-box {
+      min-height: 360px;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(124,58,237,0.16),
+          rgba(6,182,212,0.05)
+        );
+
+      border: 1px solid rgba(255,255,255,0.10);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard {
+      width: 80%;
+      height: 250px;
+
+      border-radius: 15px;
+
+      background: rgba(10,10,15,0.9);
+
+      border: 1px solid rgba(255,255,255,0.1);
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.5);
+
+      padding: 18px;
+    }
+
+    .dashboard-top {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .circle {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #52525b;
+    }
+
+    .dashboard-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .dashboard-card {
+      height: 80px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* CTA */
+
+    .cta {
+      max-width: 1000px;
+      margin: 60px auto;
+
+      padding: 70px 30px;
+
+      text-align: center;
+
+      border-radius: 28px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(124,58,237,0.20),
+          transparent 65%
+        );
+
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .cta h2 {
+      font-size: clamp(35px, 5vw, 55px);
+      letter-spacing: -2px;
+      margin-bottom: 15px;
+    }
+
+    .cta p {
+      color: #71717a;
+      margin-bottom: 28px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 35px 24px;
+      color: #52525b;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        letter-spacing: -3px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .showcase-text h2 {
+        font-size: 35px;
+      }
+
+      .orb {
+        width: 280px;
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      nav {
+        padding: 0 16px;
+      }
+
+      .nav-button {
+        display: none;
+      }
+
+      .hero {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+      .section {
+        padding: 70px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <header>
+    <nav>
+
+      <div class="logo">
+        <div class="logo-icon">✦</div>
+        COSMIC
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+
+      <button class="nav-button" onclick="scrollToSection('contact')">
+        Get Started
+      </button>
+
+    </nav>
+  </header>
+
+
+  <!-- HERO -->
+
+  <main id="home">
+
+    <section class="hero">
+
+      <div class="orb"></div>
+
+      <div class="hero-content">
+
+        <div class="badge">
+          <span class="dot"></span>
+          Next Generation AI Platform
+        </div>
+
+        <h1>
+          Build Beyond<br>
+          Imagination.
+        </h1>
+
+        <p>
+          A modern AI-powered experience designed to help you
+          transform ideas into intelligent digital solutions.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a
+            href="#features"
+            class="primary-button"
+          >
+            Explore Platform →
+          </a>
+
+          <a
+            href="#about"
+            class="secondary-button"
+          >
+            Learn More
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section
+      class="section"
+      id="features"
+    >
+
+      <div class="section-heading">
+
+        <span>Powerful Features</span>
+
+        <h2>
+          Everything you need.
+        </h2>
+
+        <p>
+          Designed for speed, simplicity and intelligent workflows.
+        </p>
+
+      </div>
+
+
+      <div class="features">
+
+        <div class="card">
+
+          <div class="icon">✦</div>
+
+          <h3>
+            Intelligent AI
+          </h3>
+
+          <p>
+            Use modern AI capabilities to automate tasks,
+            generate insights and build smarter experiences.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="icon">⚡</div>
+
+          <h3>
+            Lightning Fast
+          </h3>
+
+          <p>
+            Optimized architecture delivers a fast,
+            smooth and responsive experience across devices.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="icon">◈</div>
+
+          <h3>
+            Modern Interface
+          </h3>
+
+          <p>
+            A clean futuristic interface designed around
+            usability, clarity and visual hierarchy.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="icon">⌘</div>
+
+          <h3>
+            Easy Workflow
+          </h3>
+
+          <p>
+            Simplify complex workflows with an intuitive
+            experience that anyone can understand.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="icon">◉</div>
+
+          <h3>
+            Real-Time Data
+          </h3>
+
+          <p>
+            Monitor important information and interactions
+            with real-time visual feedback.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="icon">∞</div>
+
+          <h3>
+            Scalable
+          </h3>
+
+          <p>
+            Built with a flexible foundation that can grow
+            with your application and users.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT / SHOWCASE -->
+
+    <section
+      class="section"
+      id="about"
+    >
+
+      <div class="showcase">
+
+        <div class="showcase-text">
+
+          <span
+            style="
+              color:#8b5cf6;
+              font-size:13px;
+              font-weight:700;
+              text-transform:uppercase;
+              letter-spacing:2px;
+            "
+          >
+            Experience
+          </span>
+
+          <h2>
+            Designed for the future.
+          </h2>
+
+          <p>
+            Cosmic combines powerful technology with a
+            beautiful interface to create an experience
+            that feels simple, fast and intelligent.
+          </p>
+
+          <a
+            href="#contact"
+            class="primary-button"
+          >
+            Start Exploring →
+          </a>
+
+        </div>
+
+
+        <div class="showcase-box">
+
+          <div class="dashboard">
+
+            <div class="dashboard-top">
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+
+            <div class="dashboard-content">
+
+              <div class="dashboard-card"></div>
+              <div class="dashboard-card"></div>
+
+              <div class="dashboard-card"></div>
+              <div class="dashboard-card"></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section
+      class="section"
+      id="contact"
+    >
+
+      <div class="cta">
+
+        <h2>
+          Ready to explore?
+        </h2>
+
+        <p>
+          Start building your next intelligent experience today.
+        </p>
+
+        <a
+          href="#home"
+          class="primary-button"
+        >
+          Get Started →
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    © 2026 Cosmic. Built for the future.
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    function scrollToSection(id) {
+
+      const element = document.getElementById(id);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
